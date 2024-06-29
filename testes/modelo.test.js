@@ -23,3 +23,19 @@ test('Testando cadastro de três perguntas', () => {
   expect(perguntas[2].num_respostas).toBe(0);
   expect(perguntas[1].id_pergunta).toBe(perguntas[2].id_pergunta-1);
 });
+
+test('Testando a pesquisa de uma pergunta por id', () => {
+  const id_pergunta = modelo.cadastrar_pergunta('Como multiplicar polinômios em O( n*log(n) ) ?');
+  const pergunta = modelo.get_pergunta(id_pergunta); 
+  expect(pergunta.texto).toBe('Como multiplicar polinômios em O( n*log(n) ) ?');
+});
+
+test('Testando o cadastro de duas respostas', () => {
+  const id_pergunta = modelo.cadastrar_pergunta('Como multiplicar polinômios em O( n*log(n) ) ?');
+  const id_resposta_1 = modelo.cadastrar_resposta(id_pergunta, 'Basta usar um algoritmo de FFT.');
+  const id_resposta_2 = modelo.cadastrar_resposta(id_pergunta, 'Use Fast Fourier Transform.');
+  const respostas = modelo.get_respostas(id_pergunta);
+  expect(respostas.length).toBe(2);
+  expect(respostas[0].texto).toBe('Basta usar um algoritmo de FFT.');
+  expect(respostas[1].texto).toBe('Use Fast Fourier Transform.');
+});
